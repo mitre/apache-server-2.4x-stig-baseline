@@ -37,5 +37,9 @@ organizations security infrastructure."
   tag fix_id: 'F-98961r1_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+
+  describe "Work with the SIEM administrator to determine current security integrations" do 
+   skip "If the SIEM is not integrated with security, this is a finding."
+  end
 end
 

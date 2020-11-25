@@ -36,5 +36,11 @@ connections."
   tag fix_id: 'F-98869r1_fix'
   tag cci: ['CCI-000139', 'CCI-001855']
   tag nist: ['AU-5 a', 'AU-5 (1)']
+
+  describe "Review server logging and alert configuration" do 
+    skip "Work with the SIEM administrator to determine if an alert is configured when audit 
+    data is no longer received as expected. If there is no alert configured, this is a finding."
+  end
+  
 end
 

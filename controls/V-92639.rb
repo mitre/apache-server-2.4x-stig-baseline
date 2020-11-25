@@ -42,5 +42,11 @@ configuration."
   tag fix_id: 'F-98881r1_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
-end
 
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do 
+    its('AuthUserFile') { should_not be_nil }
+  end
+
+end

@@ -6,3 +6,41 @@ copyright_email: you@example.com
 license: Apache-2.0
 summary: "This Security Technical Implementation Guide is published as a tool to improve the security of Department of Defense (DoD) information systems. The requirements are derived from the National Institute of Standards and Technology (NIST) 800-53 and related documents. Comments or proposed revisions to this document should be sent via email to the following address: disa.stig_spt@mail.mil."
 version: 0.1.0
+
+inputs:
+- name: config_path
+  description: The location of the Apache config file <HTTPD_ROOT/SERVER_CONFIG_FILE> 
+  type: String 
+  value: /usr/local/apache2/conf/httpd.conf
+  
+- name: privileged_users_logs_owner
+  description: 'List of privileged users in owners with access to log files'
+  type: Array
+  value: []
+
+- name: privileged_users_logs_group
+  description: 'List of privileged users in groups with access to log files'
+  type: Array
+  value: []
+
+- name: proxy_server
+  description: 'Is the apache server used as a proxy server and not a web server'
+  type: Boolean
+  value: false
+
+- name: apache_version
+  description: "The version of the Apache Server in use"
+  type: String 
+  value: '2.4' 
+
+- name: server_admins
+  description: The List of server admins users.
+  type: Array 
+  value: ['httpd']
+
+- name: server_admin_groups
+  description: The List of server admins groups.
+  type: Array 
+  value: ['httpd']
+
+

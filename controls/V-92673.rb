@@ -45,5 +45,13 @@ directory tree, the shell, or other operating system functions and utilities."
   tag fix_id: 'F-98915r1_fix'
   tag cci: ['CCI-000381', 'CCI-001082', 'CCI-001813']
   tag nist: ['CM-7 a', 'SC-2', 'CM-5 (1)']
+
+  describe "Obtain a list of the user accounts for the system, noting the privileges for each account" do 
+    skip "Verify with the SA or the Information System Security Officer (ISSO) that all privileged accounts are mission essential and documented.
+      Verify with the SA or the ISSO that all non-administrator access to shell scripts and operating system functions are mission essential and documented.
+      If undocumented privileged accounts are present, this is a finding.
+      If undocumented access to shell scripts or operating system functions is present, this is a finding."
+  end
+
 end
 

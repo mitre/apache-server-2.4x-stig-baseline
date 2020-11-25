@@ -46,5 +46,26 @@ command:
   tag fix_id: 'F-98901r1_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  modules_command = "httpd -M | sort"
+  installed_modules = command(modules_command).stdout.split 
+  
+  check_modules = [
+    "dav_module",
+    "dav_fs_module",
+    "dav_lock_module",
+  ]
+
+  bad_modules = installed_modules.select do |i|
+    check_modules.any? {|j| i.include?(j) }
+  end
+
+  describe bad_modules do 
+    it "The following modules should be removed from Apache server" do 
+      failure_message = "The following modules should be removed: #{bad_modules.join(', ')}"
+      expect(bad_modules).to be_empty, failure_message
+    end
+  end
+
 end
 

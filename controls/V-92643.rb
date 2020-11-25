@@ -61,5 +61,49 @@ command:
   tag fix_id: 'F-98885r2_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
-end
 
+  proxy_server = input('proxy_server')
+  config_path = input('config_path')
+  modules_command = "httpd -M | sort"
+  installed_modules = command(modules_command).stdout.split 
+  
+  check_modules = [
+    "proxy_module",
+    "proxy_ajp_module",
+    "proxy_balancer_module",
+    "proxy_ftp_module",
+    "proxy_http_module",
+    "proxy_connect_module"
+  ]
+
+
+  if !proxy_server
+    impact 0.5
+  else
+    impact 0.0
+  end
+
+  proxy_modules = installed_modules.select do |im|
+    check_modules.any? {|cm| im.include?(cm) }
+  end
+
+  describe "Proxy modules should not be present on the Apache server" do
+    subject { proxy_modules.empty? }
+    it { should cmp true }  
+  end
+
+  describe apache_conf(config_path) do 
+    its('ProxyRequest') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).ProxyRequest.nil?
+    apache_conf(config_path).ProxyRequest.each do |value|
+      describe "ProxyRequest value should be set to On" do
+        subject { value } 
+        it { should cmp 'On' }
+      end
+    end
+  end
+
+
+end

@@ -69,5 +69,15 @@ setup.
   tag fix_id: 'F-98863r1_fix'
   tag cci: ['CCI-000133']
   tag nist: ['AU-3']
+
+  describe "This is a manual check" do 
+    skip "Review Apache web server logging capability. Review the location of the log files.
+    When the log file is displayed, review the source IP information in the log entries 
+    and verify the entries do not reflect the IP address of the proxy server. If the log 
+    entries in the log file(s) reflect the IP address of the client in addition to the 
+    proxy address, this is not a finding. If the log entries in the log file(s) reflect 
+    the IP address of the proxy server as the source, this is a finding."
+  end
+  
 end
 

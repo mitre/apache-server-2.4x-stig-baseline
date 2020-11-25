@@ -61,5 +61,34 @@ greater; add the directive if it does not exist.
   tag fix_id: 'F-98839r1_fix'
   tag cci: ['CCI-000054']
   tag nist: ['AC-10']
+
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do 
+    its('KeepAlive') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).KeepAlive.nil?
+    apache_conf(config_path).KeepAlive.each do |value|
+      describe "KeepAlive value should be set to On" do
+        subject { value } 
+        it { should cmp 'On' }
+      end
+    end
+  end
+
+  describe apache_conf(config_path) do 
+    its('MaxKeepAliveRequests') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).MaxKeepAliveRequests.nil?
+    apache_conf(config_path).MaxKeepAliveRequests.each do |value|
+      describe "MaxKeepAliveRequests value should be set to 100" do
+        subject { value } 
+        it { should cmp '100' }
+      end
+    end
+  end
+  
 end
 

@@ -50,5 +50,12 @@ https://httpd.apache.org/docs/2.4/mod/.
   tag fix_id: 'F-98879r1_fix'
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
+
+  modules_command = "httpd -M"
+  modules = command(modules_command).stdout
+
+  describe "Check for unused modules" do 
+    skip "The output of the command #{modules_command} is below. Validate that all displayed modules are required for operations.\nModules Installed: \n#{modules}"
+  end
 end
 

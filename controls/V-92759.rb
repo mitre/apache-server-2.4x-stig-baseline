@@ -73,5 +73,28 @@ enabled \"Directory\" directive (except root).
   tag fix_id: 'F-99003r1_fix'
   tag cci: ['CCI-001084']
   tag nist: ['SC-3']
-end
 
+  config_path = input('config_path')
+  describe apache_conf(config_path) do 
+    its('SessionCookieName') { should_not be_nil }
+  end
+
+  directory = apache_conf(config_path).params("<Directory")
+  limit_except = apache_conf(config_path).params("<LimitExcept")
+
+  if !directory.nil? && !limit_except.nil? 
+    describe "Each Directory directive has a LimitExcept defined" do 
+      subject {limit_except.count }
+      it { should cmp (directory.count - 1) }
+    end
+    describe apache_conf(config_path) do
+      its('content') { should match /<LimitExcept GET POST OPTIONS>\s+Require all denied\s+<\/LimitExcept>/ }
+    end
+  else
+    describe "LimitExcept directives are not defined for all Directory directives" do 
+      subject { limit_except }
+      it { should_not be_nil }
+    end
+  end
+
+end

@@ -53,5 +53,20 @@ directive is not configured, this is a finding.
   tag fix_id: 'F-98947r1_fix'
   tag cci: ['CCI-002361']
   tag nist: ['AC-12']
-end
 
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do 
+    its('RequestReadTimeout') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).RequestReadTimeout.nil?
+    apache_conf(config_path).RequestReadTimeout.each do |value|
+      describe "RequestReadTimeout value should be set" do
+        subject { value } 
+        it { should_not be_nil }
+      end
+    end
+  end
+  
+end

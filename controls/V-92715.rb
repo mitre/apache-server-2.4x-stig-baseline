@@ -34,5 +34,9 @@ the logging requirements of the Apache web server."
   tag fix_id: 'F-98957r1_fix'
   tag cci: ['CCI-001849']
   tag nist: ['AU-4']
+
+  describe "Work with SIEM administrator to determine log storage capacity." do 
+    skip "If there is no setting within a SIEM to accommodate enough a large logging capacity, this is a finding." 
+  end
 end
 

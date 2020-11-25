@@ -147,5 +147,22 @@ environment.
   tag fix_id: 'F-98883r1_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
-end
 
+  describe "The Apache web server must only contain services and functions necessary for operation" do 
+    skip "Verify the document root directory and the configuration files do not provide for default index.html or welcome page."
+  end
+
+  describe package('httpd-manual') do 
+    it { should_not be_installed }
+  end
+
+  config_path = input('config_path')
+  apache_config = apache_conf(config_path)
+
+  describe apache_config.params("SetHandler") do
+    it { should_not cmp 'server-status' }
+    it { should_not cmp 'server-info' }
+    it { should_not cmp 'pearl-script' }
+  end
+
+end

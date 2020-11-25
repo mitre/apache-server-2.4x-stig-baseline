@@ -42,5 +42,10 @@ server in the event of the necessity for rollback.
   tag fix_id: 'F-98937r1_fix'
   tag cci: ['CCI-001190']
   tag nist: ['SC-24']
-end
 
+  describe "Review documentation for a disaster recovery procedures" do 
+    skip "Interview the System Administrator for the Apache 2.4 web server. Ask for documentation 
+      on the disaster recovery methods tested and planned for the Apache 2.4 web server in the event of the necessity for rollback."
+  end
+  
+end

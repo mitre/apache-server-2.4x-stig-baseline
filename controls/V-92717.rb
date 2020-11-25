@@ -27,5 +27,9 @@ specified log record content to an audit log server."
   tag fix_id: 'F-98959r1_fix'
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
+
+  describe "Work with SIEM administrator to determine audit configurations" do 
+    skip "If there is a setting within the SIEM that could impede the ability to write specific log record content, this is a finding."
+  end
 end
 

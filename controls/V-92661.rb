@@ -62,5 +62,22 @@ this is a finding.
   tag fix_id: 'F-98903r1_fix'
   tag cci: ['CCI-000186', 'CCI-000382']
   tag nist: ['IA-5 (2) (b)', 'CM-7 b']
+
+  config_path = input('config_path')
+  listen = apache_conf(config_path).params("Listen")
+
+  if !listen.nil?
+    listen.each do |address|
+      describe address do 
+        it { should match /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/ }
+        it { should_not match /^0.0.0.0:[0-9]+$/ }
+      end
+    end
+  else
+    describe apache_conf(config_path) do 
+      its('Listen') { should_not cmp nil } 
+    end 
+  end
+
 end
 

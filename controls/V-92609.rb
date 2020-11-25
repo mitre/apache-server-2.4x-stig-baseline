@@ -74,8 +74,19 @@ of logged elements.
   tag stig_id: 'AS24-U1-000070'
   tag fix_id: 'F-98851r1_fix'
   tag cci: ['CCI-000130', 'CCI-000131', 'CCI-000132', 'CCI-000133',
-'CCI-000134', 'CCI-000169', 'CCI-001464', 'CCI-001487']
+  'CCI-000134', 'CCI-000169', 'CCI-001464', 'CCI-001487']
   tag nist: ['AU-3', 'AU-3', 'AU-3', 'AU-3', 'AU-3', 'AU-12 a', 'AU-14 (1)',
-'AU-3']
+  'AU-3']
+
+  config_path = input('config_path')
+  describe apache_conf(config_path) do
+    its ('LogFormat') { should_not be_empty }
+  end
+
+  describe "Module log_config_module should be installed" do 
+  subject { command('httpd -M | grep -i log_config_module').stdout.strip }
+    it { should_not cmp "" }
+  end
+
 end
 

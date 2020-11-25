@@ -60,5 +60,9 @@ process an invalid login shell such as \"/sbin/nologin\".
   tag fix_id: 'F-98995r1_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  describe "The account used to run the Apache web server must not have a valid login shell and password defined." do 
+    skip "Determine the account that is running the httpd process. If this account has a valid login shell and a password defined, this is a finding."
+  end
 end
 

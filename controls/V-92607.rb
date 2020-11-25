@@ -40,5 +40,11 @@ for the CustomLog."
   tag fix_id: 'F-98849r1_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
+
+  config_path = input('config_path')
+  describe apache_conf(config_path) do
+    its ('CustomLog') { should_not be_empty }
+  end
+
 end
 

@@ -46,5 +46,21 @@ Netscape and Apache to provide for password access to designated websites.
   tag fix_id: 'F-99001r1_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-end
 
+  htpasswd_command = command("find / -name htpasswd").stdout.strip
+
+  if !htpasswd_command.empty?
+    htpasswd = file(htpasswd_command)
+
+    describe htpasswd do 
+      it { should_not be_more_permissive_than('0550') }
+      its('owner') { should be_in input('server_admins') }
+    end
+
+  else 
+    describe htpasswd_command do 
+     skip "Could not find htpwasswd. This check has failed"
+    end
+  end
+
+end
