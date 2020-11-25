@@ -69,5 +69,11 @@ exist, this is a finding.
   tag fix_id: 'F-98841r1_fix'
   tag cci: ['CCI-000054']
   tag nist: ['AC-10']
+
+  config_path = input('config_path')
+  describe apache_conf(config_path) do
+    its('LoadModule') { should include 'session_module modules/mod_session.so' }
+    its('LoadModule') { should include 'usertrack_module modules/mod_usertrack.so'}
+  end
 end
 

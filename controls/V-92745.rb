@@ -64,5 +64,19 @@ ECA, and IECA CAs.
   tag fix_id: 'F-98989r1_fix'
   tag cci: ['CCI-002418']
   tag nist: ['SC-8']
-end
 
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do  
+    its('SSLCACertificateFile') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).SSLCACertificateFile.nil?
+    ca_path = File.dirname(apache_conf(config_path).SSLCACertificateFile[0])
+    ca_bundle = File.join(ca_path, 'ca-bundle.crt')
+    describe "Examine CA Bundle" do
+      skip "Check #{ca_bundle} to determine if the trusted CAs are DoD approved"
+    end
+  end
+
+end

@@ -63,5 +63,31 @@ service account:
   tag fix_id: 'F-98873r1_fix'
   tag cci: ['CCI-000163', 'CCI-000164']
   tag nist: ['AU-9', 'AU-9']
+
+  config_path = input('config_path')     
+  apache_conf_dir = apache_conf(config_path).conf_dir
+  apache_logs_dir = File.join(apache_conf_dir[0], 'logs')
+#  log_files = file(apache_logs_dir).reject { |f| file(File.join(apache_logs_dir, f)).file? }
+  log_files = command("find #{apache_logs_dir}").stdout.split("\n") 
+
+  if !log_files.empty? 
+    log_files.each do |log|
+      file_group = file(log).group
+      describe "Only system administrators and service accounts running the server should have permissions to the files." do 
+        subject {file(log)}
+        its('owner') { should be_in input('privileged_users_logs_owner') }
+        its('group') { should be_in input('privileged_users_logs_group') }
+      end
+    end
+  else
+    describe "Only system administrators and service accounts running the server should have permissions to the files." do 
+      skip "Logs files could not be found. This check has failed."
+    end
+  end
+
+  describe apache_conf(config_path) do 
+    its('ErrorLog') { should_not be_nil }
+  end
+  
 end
 

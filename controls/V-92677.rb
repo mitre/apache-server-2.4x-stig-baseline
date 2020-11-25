@@ -59,5 +59,20 @@ this is a finding.
   tag fix_id: 'F-98919r1_fix'
   tag cci: ['CCI-001185', 'CCI-002361']
   tag nist: ['SC-23 (1)', 'AC-12']
-end
 
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do 
+    its('SessionMaxAge') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).SessionMaxAge.nil?
+    apache_conf(config_path).SessionMaxAge.each do |value|
+      describe "SessionMaxAge value should be less than or equal to 600" do
+        subject { value } 
+        it { should be <= 600 }
+      end
+    end
+  end
+
+end

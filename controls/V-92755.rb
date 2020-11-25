@@ -37,5 +37,13 @@ maintain appropriate service packs and patches."
   tag fix_id: 'F-98999r1_fix'
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
-end
 
+  httpd_version = command("httpd -v").stdout.scan(/Server version: Apache\/(\S+)\s\(\w+\)/).flatten
+  required_version = input('apache_version')
+
+  describe "Apache Web Server installed must be updated" do 
+    subject { httpd_version }
+    it { should cmp > input('apache_version') }
+  end
+  
+end

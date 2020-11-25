@@ -68,5 +68,29 @@ command:
   tag fix_id: 'F-98929r1_fix'
   tag cci: ['CCI-001188']
   tag nist: ['SC-23 (3)']
-end
 
+  config_path = input('config_path')
+  session_crypto = command("httpd -M | grep session_crypto").stdout
+
+  describe session_crypto do 
+    it { should include "session_crypto_module" }
+  end
+
+  describe apache_conf(config_path) do 
+    its("SessionCryptoCipher") { should cmp "aes256" }
+  end 
+
+  describe apache_conf(config_path) do 
+    its('SessionCryptoCipher') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).SessionCryptoCipher.nil?
+    apache_conf(config_path).SessionCryptoCipher.each do |value|
+      describe "SessionCryptoCipher value should be set to aes256" do
+        subject { value } 
+        it { should cmp "aes256" }
+      end
+    end
+  end
+
+end

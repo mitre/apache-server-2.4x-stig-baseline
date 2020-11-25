@@ -35,5 +35,8 @@ modify non-privileged account access."
   tag fix_id: 'F-98913r1_fix'
   tag cci: ['CCI-001082']
   tag nist: ['SC-2']
-end
 
+  describe "Check the web server documentation and configration to determine web server accounts" do 
+    skip "Any directories or files owned by anyone other than an administrative service account is a finding. If non-privileged web server accounts are available with access to functions, directories, or files not needed for the role of the account, this is a finding"
+  end
+end

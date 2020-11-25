@@ -63,5 +63,30 @@ they configure .exe, .dll, .com, .bat, or .csh, remove those references.
   tag fix_id: 'F-98895r1_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  config_path = input('config_path')
+  file_endings = [".exe", ".dll", ".com", ".bat", ".csh"]
+  
+  describe apache_conf(config_path) do
+    its('AddHandler.to_s') { should_not match '.exe'}
+    its('AddHandler.to_s') { should_not match '.dll'}
+    its('AddHandler.to_s') { should_not match '.com'}
+    its('AddHandler.to_s') { should_not match '.bat'}
+    its('AddHandler.to_s') { should_not match '.csh'}
+  end
+  
+  describe apache_conf(config_path) do
+    its('Action.to_s') { should_not match '.exe'}
+    its('Action.to_s') { should_not match '.dll'}
+    its('Action.to_s') { should_not match '.com'}
+    its('Action.to_s') { should_not match '.bat'}
+    its('Action.to_s') { should_not match '.csh'}
+  end
+
 end
+
+
+
+
+
 

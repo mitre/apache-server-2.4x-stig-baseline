@@ -57,5 +57,9 @@ justification for the identified software, this is a finding.
   tag fix_id: 'F-98887r1_fix'
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
+
+  describe "Remove any unnecessary applications per ISSO documentation." do 
+    skip "If the site requires the use of a particular piece of software, verify that the Information System Security Officer (ISSO) maintains documentation identifying this software as necessary for operations. The software must be operated at the vendor’s current patch level and must be a supported vendor release."
+  end
 end
 

@@ -29,5 +29,10 @@ for HTTP and HTTPS."
   tag fix_id: 'F-98971r1_fix'
   tag cci: ['CCI-001762']
   tag nist: ['CM-7 (1) (b)']
+
+  describe "Review the website to determine if HTTP and HTTPs are used in accordance with well known ports (e.g., 80 and 443) or those ports and services as registered and approved for use by the DoD PPSM. Any variation in PPS will be documented, registered, and approved by the PPSM" do 
+    skip "The Apache web server must prohibit or restrict the use of nonsecure or unnecessary ports, protocols, modules, and/or services. If not, this is a finding."
+  end
+
 end
 

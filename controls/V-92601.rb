@@ -78,5 +78,19 @@ ECA, and IECA CAs.
 'CCI-001188', 'CCI-001453', 'CCI-002418', 'CCI-002422', 'CCI-002470']
   tag nist: ['AC-17 (2)', 'IA-5 (1) (c)', 'AC-3', 'IA-7', 'SC-23 (3)', "AC-17
 (2)", 'SC-8', 'SC-8 (2)', 'SC-23 (5)']
-end
 
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do  
+    its('SSLCACertificateFile') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).SSLCACertificateFile.nil?
+    ca_path = File.dirname(apache_conf(config_path).SSLCACertificateFile[0])
+    ca_bundle = File.join(ca_path, 'ca-bundle.crt')
+    describe "Examine CA Bundle" do
+      skip "Check #{ca_bundle} to determine if the trusted CAs are DoD approved"
+    end
+  end
+
+end

@@ -63,5 +63,33 @@ because the default value is \"On\".
   tag fix_id: 'F-98943r1_fix'
   tag cci: ['CCI-001312']
   tag nist: ['SI-11 a']
-end
 
+  config_path = input('config_path')
+
+  describe apache_conf(config_path) do 
+    its('TraceEnable') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).TraceEnable.nil?
+    apache_conf(config_path).TraceEnable.each do |value|
+      describe "TraceEnable value should be off" do
+        subject { value } 
+        it { should cmp 'off' }
+      end
+    end
+  end
+
+  describe apache_conf(config_path) do 
+    its('LogLevel') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).LogLevel.nil?
+    apache_conf(config_path).LogLevel.each do |value|
+      describe "LogLevel value should be set" do
+        subject { value } 
+        it { should_not be_nil }
+      end
+    end
+  end
+
+end

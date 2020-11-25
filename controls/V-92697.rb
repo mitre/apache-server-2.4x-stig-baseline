@@ -51,5 +51,19 @@ or less:
   tag fix_id: 'F-98939r1_fix'
   tag cci: ['CCI-001094', 'CCI-002385']
   tag nist: ['SC-5 (1)', 'SC-5']
-end
 
+  config_path = input('config_path')
+  describe apache_conf(config_path) do 
+    its('Timeout') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).Timeout.nil?
+    apache_conf(config_path).Timeout.each do |value|
+      describe "Timeout value definition" do
+        subject { value } 
+        it { should cmp > 10 }
+      end
+    end
+  end
+
+end

@@ -65,5 +65,10 @@ ensure the \"LogFormat\" line contains the %t flag.
   tag fix_id: 'F-98965r1_fix'
   tag cci: ['CCI-001889', 'CCI-001890']
   tag nist: ['AU-8 b', 'AU-8 b']
-end
 
+  config_path = input('config_path')
+  describe file(config_path) do 
+    its ('content') { should match '^[\\s]*LogFormat[\\s]+.*(?=.*\%t).*$' }
+  end
+  
+end

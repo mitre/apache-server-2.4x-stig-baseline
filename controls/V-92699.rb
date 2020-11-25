@@ -66,5 +66,12 @@ for \"4xx\" or \"5xx\" HTTP status codes, this is a finding.
   tag fix_id: 'F-98941r1_fix'
   tag cci: ['CCI-001312']
   tag nist: ['SI-11 a']
-end
 
+  config_path = input('config_path')
+  describe apache_conf(config_path) do
+    its('ErrorDocument') { should_not be_empty }
+    its('ErrorDocument.to_s') { should match /4[0-9][0-9]/ }
+    its('ErrorDocument.to_s') { should match /5[0-9][0-9]/ }
+  end
+
+end

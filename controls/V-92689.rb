@@ -56,5 +56,11 @@ to guess.
   tag fix_id: 'F-98931r2_fix'
   tag cci: ['CCI-001188', 'CCI-001664']
   tag nist: ['SC-23 (3)', 'SC-23 (3)']
-end
 
+  unique_id_module = command("httpd -M | grep unique_id").stdout
+
+  describe unique_id_module do 
+    it { should include "unique_id_module" }
+  end 
+
+end

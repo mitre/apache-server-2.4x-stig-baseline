@@ -57,5 +57,26 @@ directive.
   tag fix_id: 'F-98921r1_fix'
   tag cci: ['CCI-001664']
   tag nist: ['SC-23 (3)']
-end
 
+  config_path = input('config_path')
+  describe apache_conf(config_path) do 
+    its('SessionCookieName') { should_not be_nil }
+  end
+
+  if !apache_conf(config_path).SessionCookieName.nil?
+    apache_conf(config_path).SessionCookieName.each do |value|
+      describe "SessionCookieName value should return httpOnly and Secure" do
+        subject { value } 
+        it { should include "httpOnly" }
+        it { should include "Secure" }
+      end
+    end
+  end
+
+  headers_module = command("httpd -M | grep -i headers_module (shared)")
+
+  describe headers_module.stdout.strip do 
+    it {should_not cmp "" }
+  end
+
+end
