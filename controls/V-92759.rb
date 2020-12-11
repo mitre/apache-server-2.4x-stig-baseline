@@ -75,26 +75,11 @@ enabled \"Directory\" directive (except root).
   tag nist: ['SC-3']
 
   config_path = input('config_path')
-  describe apache_conf(config_path) do 
-    its('SessionCookieName') { should_not be_nil }
-  end
+  directory_list = file(config_path).content.scan(/^\s*(<Directory[\s\S]*?>[\s\S]*?<\/Directory>)/)
 
-  directory = apache_conf(config_path).params("<Directory")
-  limit_except = apache_conf(config_path).params("<LimitExcept")
-
-  if !directory.nil? && !limit_except.nil? 
-    describe "Each Directory directive has a LimitExcept defined" do 
-      subject {limit_except.count }
-      it { should cmp (directory.count - 1) }
-    end
-    describe apache_conf(config_path) do
-      its('content') { should match /<LimitExcept GET POST OPTIONS>\s+Require all denied\s+<\/LimitExcept>/ }
-    end
-  else
-    describe "LimitExcept directives are not defined for all Directory directives" do 
-      subject { limit_except }
-      it { should_not be_nil }
-    end
+  describe "Each Directory directive has a LimitExcept defined" do 
+    skip("All <Directory></Directory> directives except the root <Directory> must have a LimitExcept directive defined.
+      A list of directories has been found below:\n#{directory_list}\n")
   end
 
 end

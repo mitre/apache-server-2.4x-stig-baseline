@@ -83,9 +83,9 @@ greater; add the directive if it does not exist.
 
   if !apache_conf(config_path).MaxKeepAliveRequests.nil?
     apache_conf(config_path).MaxKeepAliveRequests.each do |value|
-      describe "MaxKeepAliveRequests value should be set to 100" do
+      describe "If the value of \"MaxKeepAliveRequests\" is set to a value less than \"100\" or does not exist, this is a finding." do
         subject { value } 
-        it { should cmp '100' }
+        it { should cmp < '100' }
       end
     end
   end

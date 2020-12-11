@@ -77,10 +77,6 @@ command:
   end
 
   describe apache_conf(config_path) do 
-    its("SessionCryptoCipher") { should cmp "aes256" }
-  end 
-
-  describe apache_conf(config_path) do 
     its('SessionCryptoCipher') { should_not be_nil }
   end
 

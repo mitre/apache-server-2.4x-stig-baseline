@@ -61,7 +61,7 @@ or less:
     apache_conf(config_path).Timeout.each do |value|
       describe "Timeout value definition" do
         subject { value } 
-        it { should cmp > 10 }
+        it { should cmp <= 10 }
       end
     end
   end

@@ -81,6 +81,12 @@ ECA, and IECA CAs.
 
   config_path = input('config_path')
 
+  ssl_module = command("httpd -M | grep ssl_module").stdout
+
+  describe ssl_module do 
+    it { should include "ssl_module" }
+  end 
+
   describe apache_conf(config_path) do  
     its('SSLCACertificateFile') { should_not be_nil }
   end
