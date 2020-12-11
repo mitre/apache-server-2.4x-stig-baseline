@@ -64,13 +64,13 @@ permissions to read the log files."
       file_group = file(log).group
       describe "Only system administrators and service accounts running the server should have permissions to the files." do 
         subject {file(log)}
-        its('owner') { should be_in input('privileged_users_logs_owner') }
-        its('group') { should be_in input('privileged_users_logs_group') }
+        its('owner') { should be_in input('server_admins') }
+        its('group') { should be_in input('server_admin_groups') }
       end
     end
   else
     describe "Only system administrators and service accounts running the server should have permissions to the files." do 
-      skip "Logs files could not be found. This check has failed."
+      skip "Logs files could not be found. This check has to be manually reviewed."
     end
   end
   

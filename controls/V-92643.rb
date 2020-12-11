@@ -77,10 +77,10 @@ command:
   ]
 
 
-  if !proxy_server
-    impact 0.5
-  else
+  if proxy_server
     impact 0.0
+  else
+    impact 0.5
   end
 
   proxy_modules = installed_modules.select do |im|
@@ -90,10 +90,6 @@ command:
   describe "Proxy modules should not be present on the Apache server" do
     subject { proxy_modules.empty? }
     it { should cmp true }  
-  end
-
-  describe apache_conf(config_path) do 
-    its('ProxyRequest') { should_not be_nil }
   end
 
   if !apache_conf(config_path).ProxyRequest.nil?

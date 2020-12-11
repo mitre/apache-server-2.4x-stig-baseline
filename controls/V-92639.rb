@@ -46,7 +46,7 @@ configuration."
   config_path = input('config_path')
 
   describe apache_conf(config_path) do 
-    its('AuthUserFile') { should_not be_nil }
+    its('AuthUserFile') { should be_nil }
   end
 
 end

@@ -59,7 +59,7 @@ Netscape and Apache to provide for password access to designated websites.
 
   else 
     describe htpasswd_command do 
-     skip "Could not find htpwasswd. This check has failed"
+     skip "Could not find htpwasswd. This check has to be manually reviewed."
     end
   end
 

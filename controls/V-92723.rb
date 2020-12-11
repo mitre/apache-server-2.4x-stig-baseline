@@ -70,5 +70,11 @@ ensure the \"LogFormat\" line contains the %t flag.
   describe file(config_path) do 
     its ('content') { should match '^[\\s]*LogFormat[\\s]+.*(?=.*\%t).*$' }
   end
+
+  log_config_module = command("httpd -M | grep log_config_module").stdout
+
+  describe log_config_module do 
+    it { should include "log_config_module" }
+  end 
   
 end

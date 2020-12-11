@@ -160,9 +160,9 @@ environment.
   apache_config = apache_conf(config_path)
 
   describe apache_config.params("SetHandler") do
-    it { should_not cmp 'server-status' }
-    it { should_not cmp 'server-info' }
-    it { should_not cmp 'pearl-script' }
+    it { should_not include 'server-status' }
+    it { should_not include 'server-info' }
+    it { should_not include 'perl-script' }
   end
 
 end

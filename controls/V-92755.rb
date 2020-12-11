@@ -43,7 +43,7 @@ maintain appropriate service packs and patches."
 
   describe "Apache Web Server installed must be updated" do 
     subject { httpd_version }
-    it { should cmp > input('apache_version') }
+    it { should cmp >= input('apache_version') }
   end
   
 end

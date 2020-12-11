@@ -67,7 +67,6 @@ service account:
   config_path = input('config_path')     
   apache_conf_dir = apache_conf(config_path).conf_dir
   apache_logs_dir = File.join(apache_conf_dir[0], 'logs')
-#  log_files = file(apache_logs_dir).reject { |f| file(File.join(apache_logs_dir, f)).file? }
   log_files = command("find #{apache_logs_dir}").stdout.split("\n") 
 
   if !log_files.empty? 
@@ -75,13 +74,13 @@ service account:
       file_group = file(log).group
       describe "Only system administrators and service accounts running the server should have permissions to the files." do 
         subject {file(log)}
-        its('owner') { should be_in input('privileged_users_logs_owner') }
-        its('group') { should be_in input('privileged_users_logs_group') }
+        its('owner') { should be_in input('server_admins') }
+        its('group') { should be_in input('server_admin_groups') }
       end
     end
   else
     describe "Only system administrators and service accounts running the server should have permissions to the files." do 
-      skip "Logs files could not be found. This check has failed."
+      skip "Logs files could not be found. This check has to be manually reviewed."
     end
   end
 

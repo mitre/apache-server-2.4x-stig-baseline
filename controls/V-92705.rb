@@ -56,6 +56,12 @@ directive is not configured, this is a finding.
 
   config_path = input('config_path')
 
+  reqtimeout_module = command("httpd -M | grep reqtimeout_module").stdout
+
+  describe reqtimeout_module do 
+    it { should include "reqtimeout_module" }
+  end 
+
   describe apache_conf(config_path) do 
     its('RequestReadTimeout') { should_not be_nil }
   end
