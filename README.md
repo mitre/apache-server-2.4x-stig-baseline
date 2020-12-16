@@ -23,12 +23,16 @@ While the Apache Server STIG automation profile check was developed to provide t
 
 ## Getting Started
 
-### Requirements
+### Setup Environment on STIG Validation Execution Host
 
 #### Apache Server  
 - Apache Server
 - Account providing appropriate permissions to perform audit scan
 
+#### Ensure your InSpec version is at least 4.23.10 <b>[update or remove section based upon technology]</b>
+```sh
+inspec --version
+```
 
 #### Required software on Apache Server machine
 - git
@@ -71,7 +75,7 @@ inspec exec <Profile> --show-progress
 inspec exec <Profile> --show-progress  --reporter json:results.json
 ```
 
-## Check Overview:
+## Check Overview
 
 **Manual Checks**
 

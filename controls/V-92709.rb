@@ -68,16 +68,10 @@ finding.
     its('RequireAll') { should_not be_nil }
   end
 
-  describe "If IP ranges for RequireAll directive are
-  not restrictive enough to prevent connections from nonsecure zones, this is a
-  finding." do 
-    skip "The R"
-  end
-
   require_all = file(config_path).content.scan(/^\s*(<RequireAll[\s\S]*?>[\s\S]*?<\/RequireAll>)/)
 
   if !apache_conf(config_path).RequireAll.nil?
-    describe "If IP ranges for RequireAll directive arevnot restrictive enough to prevent connections from nonsecure zones, this is avfinding." do
+    describe "If IP ranges for RequireAll directive are not restrictive enough to prevent connections from nonsecure zones, this is a finding." do
       skip "The RequireAll directive is provided below. A manual check is required to verify the IP addresses. \n #{require_all}\n"
     end
   end
