@@ -23,7 +23,7 @@ While the Apache Server STIG automation profile check was developed to provide t
 | Guidance Name  | Guidance Version | Guidance Location                            | Profile Version | Profile Release Date | STIG EOL    | Profile EOL |
 |---------------------------------------|------------------|--------------------------------------------|-----------------|----------------------|-------------|-------------|
 | Apache Server 2.4 STIG  | Ver 2, Rel 2    | https://public.cyber.mil/stigs/downloads/  |         1.0.0          |        28 Jan 2021           | NA | NA |
-| CIS Benchmark for Apache Server 2.4 9.x | 2.0.0  | https://www.cisecurity.org/cis-benchmarks/ | 1.0.0| | NA | NA |
+|
 
 
 ## Getting Started
