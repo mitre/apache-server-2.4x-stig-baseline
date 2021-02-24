@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92689' do
   title "The Apache web server must generate a session ID using as much of the
 character set as possible to reduce the risk of brute force."
@@ -31,7 +29,7 @@ to guess.
     If no unique_id is returned, open finding.
 
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -48,19 +46,18 @@ to guess.
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-APP-000224-WSR-000138'
-  tag satisfies: ['SRG-APP-000223-WSR-000145', 'SRG-APP-000224-WSR-000135',
-'SRG-APP-000224-WSR-000136', 'SRG-APP-000224-WSR-000138']
+  tag satisfies: %w(SRG-APP-000223-WSR-000145 SRG-APP-000224-WSR-000135
+SRG-APP-000224-WSR-000136 SRG-APP-000224-WSR-000138)
   tag gid: 'V-92689'
   tag rid: 'SV-102777r2_rule'
   tag stig_id: 'AS24-U1-000520'
   tag fix_id: 'F-98931r2_fix'
-  tag cci: ['CCI-001188', 'CCI-001664']
+  tag cci: %w(CCI-001188 CCI-001664)
   tag nist: ['SC-23 (3)', 'SC-23 (3)']
 
-  unique_id_module = command("httpd -M | grep unique_id").stdout
+  unique_id_module = command('httpd -M | grep unique_id').stdout
 
-  describe unique_id_module do 
-    it { should include "unique_id_module" }
-  end 
-
+  describe unique_id_module do
+    it { should include 'unique_id_module' }
+  end
 end

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92677' do
   title "The Apache web server must invalidate session identifiers upon hosted
 application user logout or other session termination."
@@ -35,7 +33,7 @@ minimize the potential for an attacker to hijack that particular user session.
     If the \"SessionMaxAge\" does not exist or is set to more than \"600\",
 this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -52,27 +50,26 @@ this is a finding.
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000220-WSR-000201'
-  tag satisfies: ['SRG-APP-000220-WSR-000201', 'SRG-APP-000295-WSR-000012']
+  tag satisfies: %w(SRG-APP-000220-WSR-000201 SRG-APP-000295-WSR-000012)
   tag gid: 'V-92677'
   tag rid: 'SV-102765r1_rule'
   tag stig_id: 'AS24-U1-000460'
   tag fix_id: 'F-98919r1_fix'
-  tag cci: ['CCI-001185', 'CCI-002361']
+  tag cci: %w(CCI-001185 CCI-002361)
   tag nist: ['SC-23 (1)', 'AC-12']
 
   config_path = input('config_path')
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('SessionMaxAge') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).SessionMaxAge.nil?
+  unless apache_conf(config_path).SessionMaxAge.nil?
     apache_conf(config_path).SessionMaxAge.each do |value|
-      describe "SessionMaxAge value should be less than or equal to 600" do
-        subject { value } 
+      describe 'SessionMaxAge value should be less than or equal to 600' do
+        subject { value }
         it { should be <= 600 }
       end
     end
   end
-
 end

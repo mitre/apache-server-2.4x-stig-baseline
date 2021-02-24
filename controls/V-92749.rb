@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92749' do
   title "The Apache web server must install security-relevant software updates
 within the configured time period directed by an authoritative source (e.g.,
@@ -27,7 +25,7 @@ software, as posted on the Apache HTTP Server Project website.
     If the version is more than one version behind the most recent patch level,
 this is a finding.
   "
-  desc  'fix', "Install the current version of the web server software and
+  desc 'fix', "Install the current version of the web server software and
 maintain appropriate service packs and patches."
   impact 0.5
   tag severity: 'medium'
@@ -39,12 +37,10 @@ maintain appropriate service packs and patches."
   tag cci: ['CCI-002605']
   tag nist: ['SI-2 c']
 
-  httpd_version = command("httpd -v").stdout.scan(/Server version: Apache\/(\S+)\s\(\w+\)/).flatten
-  required_version = input('apache_version')
+  httpd_version = command('httpd -v').stdout.scan(%r{Server version: Apache/(\S+)\s\(\w+\)}).flatten
 
-  describe "Apache Web Server installed must be updated" do 
+  describe 'Apache Web Server installed must be updated' do
     subject { httpd_version }
     it { should cmp >= input('apache_version') }
   end
-
 end

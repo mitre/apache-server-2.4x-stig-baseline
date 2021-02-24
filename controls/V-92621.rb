@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92621' do
   title "An Apache web server, behind a load balancer or proxy server, must
 produce log records containing the client IP information as the source and
@@ -52,7 +50,7 @@ server as the source, this is a finding.
 balancer/proxy server, this is not a finding.
 
   "
-  desc  'fix', "
+  desc 'fix', "
     Access the proxy server through which inbound web traffic is passed and
 configure settings to pass web traffic to the Apache web server transparently.
 
@@ -70,14 +68,12 @@ setup.
   tag cci: ['CCI-000133']
   tag nist: ['AU-3']
 
-  describe "This is a manual check" do 
+  describe 'This is a manual check' do
     skip "Review Apache web server logging capability. Review the location of the log files.
-    When the log file is displayed, review the source IP information in the log entries 
-    and verify the entries do not reflect the IP address of the proxy server. If the log 
-    entries in the log file(s) reflect the IP address of the client in addition to the 
-    proxy address, this is not a finding. If the log entries in the log file(s) reflect 
+    When the log file is displayed, review the source IP information in the log entries
+    and verify the entries do not reflect the IP address of the proxy server. If the log
+    entries in the log file(s) reflect the IP address of the client in addition to the
+    proxy address, this is not a finding. If the log entries in the log file(s) reflect
     the IP address of the proxy server as the source, this is a finding."
   end
-  
 end
-

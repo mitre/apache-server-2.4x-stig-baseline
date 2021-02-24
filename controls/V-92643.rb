@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92643' do
   title 'The Apache web server must not be a proxy server.'
   desc  "A web server should be primarily a web server or a proxy server but
@@ -33,7 +31,7 @@ modules.
     If the ProxyRequest directive is set to “On”, this is a finding.
 
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine where the proxy modules are located by running the following
 command:
 
@@ -64,18 +62,17 @@ command:
 
   proxy_server = input('proxy_server')
   config_path = input('config_path')
-  modules_command = "httpd -M | sort"
-  installed_modules = command(modules_command).stdout.split 
-  
-  check_modules = [
-    "proxy_module",
-    "proxy_ajp_module",
-    "proxy_balancer_module",
-    "proxy_ftp_module",
-    "proxy_http_module",
-    "proxy_connect_module"
-  ]
+  modules_command = 'httpd -M | sort'
+  installed_modules = command(modules_command).stdout.split
 
+  check_modules = %w(
+    proxy_module
+    proxy_ajp_module
+    proxy_balancer_module
+    proxy_ftp_module
+    proxy_http_module
+    proxy_connect_module
+  )
 
   if proxy_server
     impact 0.0
@@ -84,22 +81,20 @@ command:
   end
 
   proxy_modules = installed_modules.select do |im|
-    check_modules.any? {|cm| im.include?(cm) }
+    check_modules.any? { |cm| im.include?(cm) }
   end
 
-  describe "Proxy modules should not be present on the Apache server" do
+  describe 'Proxy modules should not be present on the Apache server' do
     subject { proxy_modules.empty? }
-    it { should cmp true }  
+    it { should cmp true }
   end
 
-  if !apache_conf(config_path).ProxyRequest.nil?
+  unless apache_conf(config_path).ProxyRequest.nil?
     apache_conf(config_path).ProxyRequest.each do |value|
-      describe "ProxyRequest value should be set to On" do
-        subject { value } 
+      describe 'ProxyRequest value should be set to On' do
+        subject { value }
         it { should cmp 'On' }
       end
     end
   end
-
-
 end

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92637' do
   title "Expansion modules must be fully reviewed, tested, and signed before
 they can exist on a production Apache web server."
@@ -40,7 +38,7 @@ need to be reviewed:
     For a complete list of signed Apache Modules, review
 https://httpd.apache.org/docs/2.4/mod/.
   "
-  desc  'fix', 'Remove any unsigned modules.'
+  desc 'fix', 'Remove any unsigned modules.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000131-WSR-000073'
@@ -51,11 +49,10 @@ https://httpd.apache.org/docs/2.4/mod/.
   tag cci: ['CCI-001749']
   tag nist: ['CM-5 (3)']
 
-  modules_command = "httpd -M"
+  modules_command = 'httpd -M'
   modules = command(modules_command).stdout
 
-  describe "Check for unused modules" do 
+  describe 'Check for unused modules' do
     skip "The output of the command #{modules_command} is below. Validate that all displayed modules are required for operations.\nModules Installed: \n#{modules}"
   end
 end
-

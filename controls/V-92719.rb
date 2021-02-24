@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92719' do
   title "The Apache web server must be configured to integrate with an
 organizations security infrastructure."
@@ -26,7 +24,7 @@ integrations.
 
     If the SIEM is not integrated with security, this is a finding.
   "
-  desc  'fix', "Work with the SIEM administrator to integrate with an
+  desc 'fix', "Work with the SIEM administrator to integrate with an
 organizations security infrastructure."
   impact 0.5
   tag severity: 'medium'
@@ -38,8 +36,7 @@ organizations security infrastructure."
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
 
-  describe "Work with the SIEM administrator to determine current security integrations" do 
-   skip "If the SIEM is not integrated with security, this is a finding."
+  describe 'Work with the SIEM administrator to determine current security integrations' do
+    skip 'If the SIEM is not integrated with security, this is a finding.'
   end
 end
-

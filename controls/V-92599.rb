@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92599' do
   title 'The Apache web server must perform server-side session management.'
   desc  "Session management is the practice of protecting the bulk of the user
@@ -43,7 +41,7 @@ exist, this is a finding.
 (shared), this is a finding.
 
   "
-  desc  'fix', "
+  desc 'fix', "
     If the modules are not installed, install any missing packages.
 
     Add the following lines to the \"httpd.conf\" file:
@@ -73,7 +71,6 @@ exist, this is a finding.
   config_path = input('config_path')
   describe apache_conf(config_path) do
     its('LoadModule') { should include 'session_module modules/mod_session.so' }
-    its('LoadModule') { should include 'usertrack_module modules/mod_usertrack.so'}
+    its('LoadModule') { should include 'usertrack_module modules/mod_usertrack.so' }
   end
 end
-

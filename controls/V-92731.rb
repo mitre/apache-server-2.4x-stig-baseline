@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92731' do
   title "The Apache web server must be protected from being stopped by a
 non-privileged user."
@@ -48,7 +46,7 @@ non-privileged users.
     If the process ID and the utilities are not protected from non-privileged
 users, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Review the web server documentation and deployed configuration to determine
 where the process ID is stored and which utilities are used to start/stop the
 web server.
@@ -76,30 +74,29 @@ command:
   tag fix_id: 'F-98975r1_fix'
   tag cci: ['CCI-002385']
   tag nist: ['SC-5']
-  
-  pid_path = command("find / -name httpd.pid").stdout.strip
-  service_path = command("find / -name service").stdout.strip
-  apachectl_path = command("find / -name apachectl").stdout.strip
+
+  pid_path = command('find / -name httpd.pid').stdout.strip
+  service_path = command('find / -name service').stdout.strip
+  apachectl_path = command('find / -name apachectl').stdout.strip
 
   if file(pid_path).exist?
-    describe file(pid_path) do 
+    describe file(pid_path) do
       its('owner') { should be_in input('server_admins') }
       its('group') { should be_in input('server_admin_groups') }
     end
   end
 
   if file(service_path).exist?
-    describe file(service_path) do 
+    describe file(service_path) do
       its('owner') { should be_in input('server_admins') }
       its('group') { should be_in input('server_admin_groups') }
     end
   end
 
   if file(apachectl_path).exist?
-    describe file(apachectl_path) do 
+    describe file(apachectl_path) do
       its('owner') { should be_in input('server_admins') }
       its('group') { should be_in input('server_admin_groups') }
     end
   end
-
 end

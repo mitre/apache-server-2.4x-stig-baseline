@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92745' do
   title "The Apache web server must remove all export ciphers to protect the
 confidentiality and integrity of transmitted information."
@@ -41,7 +39,7 @@ Authorities (ECA) if approved by the AO. The PKE InstallRoot 3.06 System
 Administrator Guide (SAG), dated 08 Jul 2008, contains a complete list of DoD,
 ECA, and IECA CAs.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -67,16 +65,15 @@ ECA, and IECA CAs.
 
   config_path = input('config_path')
 
-  describe apache_conf(config_path) do  
+  describe apache_conf(config_path) do
     its('SSLCACertificateFile') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).SSLCACertificateFile.nil?
+  unless apache_conf(config_path).SSLCACertificateFile.nil?
     ca_path = File.dirname(apache_conf(config_path).SSLCACertificateFile[0])
     ca_bundle = File.join(ca_path, 'ca-bundle.crt')
-    describe "Examine CA Bundle" do
+    describe 'Examine CA Bundle' do
       skip "Check #{ca_bundle} to determine if the trusted CAs are DoD approved"
     end
   end
-
 end

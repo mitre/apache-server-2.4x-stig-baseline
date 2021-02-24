@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92699' do
   title "Warning and error messages displayed to clients must be modified to
 minimize the identity of the Apache web server, patches, loaded modules, and
@@ -32,7 +30,7 @@ for \"4xx\" or \"5xx\" HTTP status codes, this is a finding.
 
     # cat /<path_to_file>/httpd.conf | grep -i \"ErrorDocument\"
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -73,5 +71,4 @@ for \"4xx\" or \"5xx\" HTTP status codes, this is a finding.
     its('ErrorDocument.to_s') { should match /4[0-9][0-9]/ }
     its('ErrorDocument.to_s') { should match /5[0-9][0-9]/ }
   end
-
 end

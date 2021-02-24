@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92687' do
   title "The Apache web server must generate a session ID long enough that it
 cannot be guessed through brute force."
@@ -38,7 +36,7 @@ enabled in the running server.
     If the \"SessionCryptoCipher\" is not used or \"SessionCryptoCipher\" is
 not set to \"aes256\", this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Configure the web server to generate session identifiers that are at least
 128 bits in length.
 
@@ -70,23 +68,22 @@ command:
   tag nist: ['SC-23 (3)']
 
   config_path = input('config_path')
-  session_crypto = command("httpd -M | grep session_crypto").stdout
+  session_crypto = command('httpd -M | grep session_crypto').stdout
 
-  describe session_crypto do 
-    it { should include "session_crypto_module" }
+  describe session_crypto do
+    it { should include 'session_crypto_module' }
   end
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('SessionCryptoCipher') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).SessionCryptoCipher.nil?
+  unless apache_conf(config_path).SessionCryptoCipher.nil?
     apache_conf(config_path).SessionCryptoCipher.each do |value|
-      describe "SessionCryptoCipher value should be set to aes256" do
-        subject { value } 
-        it { should cmp "aes256" }
+      describe 'SessionCryptoCipher value should be set to aes256' do
+        subject { value }
+        it { should cmp 'aes256' }
       end
     end
   end
-
 end

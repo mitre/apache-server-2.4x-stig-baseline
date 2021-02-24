@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92639' do
   title "The Apache web server must not perform user management for hosted
 applications."
@@ -31,7 +29,7 @@ Apache Path.
     If there are uncommented lines pointing to files on disk using the above
 configuration option, this is a finding.
   "
-  desc  'fix', "Comment out the \"AuthUserFile\" lines found in the Apache
+  desc 'fix', "Comment out the \"AuthUserFile\" lines found in the Apache
 configuration."
   impact 0.5
   tag severity: 'medium'
@@ -45,8 +43,7 @@ configuration."
 
   config_path = input('config_path')
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('AuthUserFile') { should be_nil }
   end
-
 end

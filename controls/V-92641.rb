@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92641' do
   title "The Apache web server must only contain services and functions
 necessary for operation."
@@ -29,7 +27,7 @@ enabled.
 
     If any of these are present, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Review all pre-installed content and remove content that is not required.
 In particular, look for the unnecessary content that may be found in the
 document root directory, a configuration directory such as conf/extra
@@ -148,21 +146,20 @@ environment.
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  describe "The Apache web server must only contain services and functions necessary for operation" do 
-    skip "Verify the document root directory and the configuration files do not provide for default index.html or welcome page."
+  describe 'The Apache web server must only contain services and functions necessary for operation' do
+    skip 'Verify the document root directory and the configuration files do not provide for default index.html or welcome page.'
   end
 
-  describe package('httpd-manual') do 
+  describe package('httpd-manual') do
     it { should_not be_installed }
   end
 
   config_path = input('config_path')
   apache_config = apache_conf(config_path)
 
-  describe apache_config.params("SetHandler") do
+  describe apache_config.params('SetHandler') do
     it { should_not include 'server-status' }
     it { should_not include 'server-info' }
     it { should_not include 'perl-script' }
   end
-
 end

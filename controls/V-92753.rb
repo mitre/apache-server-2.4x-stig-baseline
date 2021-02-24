@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92753' do
   title "The Apache web server must be configured in accordance with the
 security configuration settings based on DoD security configuration or
@@ -30,7 +28,7 @@ the PPSM.
     If well-known ports and services are not approved for used by PPSM, this is
 a finding.
   "
-  desc  'fix', "Ensure the website enforces the use of IANA well-known ports
+  desc 'fix', "Ensure the website enforces the use of IANA well-known ports
 for \"HTTP\" and \"HTTPS\"."
   impact 0.3
   tag severity: 'low'
@@ -42,13 +40,11 @@ for \"HTTP\" and \"HTTPS\"."
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe "Ensure the website enforces the use of IANA well-known ports for HTTP and HTTPS." do 
-    skip "Review the website to determine if \"HTTP\" and \"HTTPS\" are used in accordance 
-      with well-known ports (e.g., 80 and 443) or those ports and services as registered and approved 
+  describe 'Ensure the website enforces the use of IANA well-known ports for HTTP and HTTPS.' do
+    skip "Review the website to determine if \"HTTP\" and \"HTTPS\" are used in accordance
+      with well-known ports (e.g., 80 and 443) or those ports and services as registered and approved
       for use by the DoD Ports, Protocols, and Services Management (PPSM).
       Verify that any variation in PPS is documented, registered, and approved by the PPSM.
       If well-known ports and services are not approved for used by PPSM, this is a finding."
   end
-  
 end
-

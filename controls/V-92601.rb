@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92601' do
   title "The Apache web server must use cryptography to protect the integrity
 of remote sessions."
@@ -47,7 +45,7 @@ Authorities (ECA) if approved by the AO. The PKE InstallRoot 3.06 System
 Administrator Guide (SAG), dated 08 Jul 2008, contains a complete list of DoD,
 ECA, and IECA CAs.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -64,39 +62,38 @@ ECA, and IECA CAs.
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000014-WSR-000006'
-  tag satisfies: ['SRG-APP-000014-WSR-000006', 'SRG-APP-000015-WSR-000014',
-'SRG-APP-000033-WSR-000169', 'SRG-APP-000172-WSR-000104',
-'SRG-APP-000179-WSR-000110', 'SRG-APP-000179-WSR-000111',
-'SRG-APP-000224-WSR-000139', 'SRG-APP-000427-WSR-000186',
-'SRG-APP-000439-WSR-000151', 'SRG-APP-000439-WSR-000152',
-'SRG-APP-000439-WSR-000153', 'SRG-APP-000442-WSR-000182']
+  tag satisfies: %w(SRG-APP-000014-WSR-000006 SRG-APP-000015-WSR-000014
+SRG-APP-000033-WSR-000169 SRG-APP-000172-WSR-000104
+SRG-APP-000179-WSR-000110 SRG-APP-000179-WSR-000111
+SRG-APP-000224-WSR-000139 SRG-APP-000427-WSR-000186
+SRG-APP-000439-WSR-000151 SRG-APP-000439-WSR-000152
+SRG-APP-000439-WSR-000153 SRG-APP-000442-WSR-000182)
   tag gid: 'V-92601'
   tag rid: 'SV-102689r1_rule'
   tag stig_id: 'AS24-U1-000030'
   tag fix_id: 'F-98843r1_fix'
-  tag cci: ['CCI-000068', 'CCI-000197', 'CCI-000213', 'CCI-000803',
-'CCI-001188', 'CCI-001453', 'CCI-002418', 'CCI-002422', 'CCI-002470']
+  tag cci: %w(CCI-000068 CCI-000197 CCI-000213 CCI-000803
+CCI-001188 CCI-001453 CCI-002418 CCI-002422 CCI-002470)
   tag nist: ['AC-17 (2)', 'IA-5 (1) (c)', 'AC-3', 'IA-7', 'SC-23 (3)', "AC-17
 (2)", 'SC-8', 'SC-8 (2)', 'SC-23 (5)']
 
   config_path = input('config_path')
 
-  ssl_module = command("httpd -M | grep ssl_module").stdout
+  ssl_module = command('httpd -M | grep ssl_module').stdout
 
-  describe ssl_module do 
-    it { should include "ssl_module" }
-  end 
+  describe ssl_module do
+    it { should include 'ssl_module' }
+  end
 
-  describe apache_conf(config_path) do  
+  describe apache_conf(config_path) do
     its('SSLCACertificateFile') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).SSLCACertificateFile.nil?
+  unless apache_conf(config_path).SSLCACertificateFile.nil?
     ca_path = File.dirname(apache_conf(config_path).SSLCACertificateFile[0])
     ca_bundle = File.join(ca_path, 'ca-bundle.crt')
-    describe "Examine CA Bundle" do
+    describe 'Examine CA Bundle' do
       skip "Check #{ca_bundle} to determine if the trusted CAs are DoD approved"
     end
   end
-
 end

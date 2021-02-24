@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92759' do
   title 'HTTP request methods must be limited.'
   desc  "The HTTP 1.1 protocol supports several request methods that are rarely
@@ -46,7 +44,7 @@ this should be explicitly documented and approved by the ISSO, at which point
 this can be considered not a finding.
 
   "
-  desc  'fix', "
+  desc 'fix', "
     Edit the \"httpd.conf\" file and add the following entries for every
 enabled \"Directory\" directive (except root).
 
@@ -75,11 +73,10 @@ enabled \"Directory\" directive (except root).
   tag nist: ['SC-3']
 
   config_path = input('config_path')
-  directory_list = file(config_path).content.scan(/^\s*(<Directory[\s\S]*?>[\s\S]*?<\/Directory>)/)
+  directory_list = file(config_path).content.scan(%r{^\s*(<Directory[\s\S]*?>[\s\S]*?</Directory>)})
 
-  describe "Each Directory directive has a LimitExcept defined" do 
+  describe 'Each Directory directive has a LimitExcept defined' do
     skip("All <Directory></Directory> directives except the root <Directory> must have a LimitExcept directive defined.
       A list of directories has been found below:\n#{directory_list}\n")
   end
-
 end

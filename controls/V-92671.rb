@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92671' do
   title "Apache web server accounts accessing the directory tree, the shell, or
 other operating system functions and utilities must only be administrative
@@ -36,7 +34,7 @@ modify non-privileged account access."
   tag cci: ['CCI-001082']
   tag nist: ['SC-2']
 
-  describe "Check the web server documentation and configration to determine web server accounts" do 
-    skip "Any directories or files owned by anyone other than an administrative service account is a finding. If non-privileged web server accounts are available with access to functions, directories, or files not needed for the role of the account, this is a finding"
+  describe 'Check the web server documentation and configration to determine web server accounts' do
+    skip 'Any directories or files owned by anyone other than an administrative service account is a finding. If non-privileged web server accounts are available with access to functions, directories, or files not needed for the role of the account, this is a finding'
   end
 end

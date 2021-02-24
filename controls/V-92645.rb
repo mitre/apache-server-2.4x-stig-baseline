@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92645' do
   title "The Apache web server must provide install options to exclude the
 installation of documentation, sample code, example applications, and
@@ -46,11 +44,11 @@ unintended, or unneeded applications are not loaded on the system.
     If, after review of the application on the system, there is no
 justification for the identified software, this is a finding.
   "
-  desc  'fix', 'Remove any unnecessary applications per ISSO documentation.'
+  desc 'fix', 'Remove any unnecessary applications per ISSO documentation.'
   impact 0.7
   tag severity: 'high'
   tag gtitle: 'SRG-APP-000141-WSR-000077'
-  tag satisfies: ['SRG-APP-000141-WSR-000077', 'SRG-APP-000141-WSR-000080']
+  tag satisfies: %w(SRG-APP-000141-WSR-000077 SRG-APP-000141-WSR-000080)
   tag gid: 'V-92645'
   tag rid: 'SV-102733r1_rule'
   tag stig_id: 'AS24-U1-000270'
@@ -58,8 +56,7 @@ justification for the identified software, this is a finding.
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  describe "Remove any unnecessary applications per ISSO documentation." do 
-    skip "If the site requires the use of a particular piece of software, verify that the Information System Security Officer (ISSO) maintains documentation identifying this software as necessary for operations. The software must be operated at the vendor’s current patch level and must be a supported vendor release."
+  describe 'Remove any unnecessary applications per ISSO documentation.' do
+    skip 'If the site requires the use of a particular piece of software, verify that the Information System Security Officer (ISSO) maintains documentation identifying this software as necessary for operations. The software must be operated at the vendor’s current patch level and must be a supported vendor release.'
   end
 end
-
