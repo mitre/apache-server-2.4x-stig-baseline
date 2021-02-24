@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92597' do
   title "The Apache web server must limit the number of allowed simultaneous
 session requests."
@@ -36,7 +34,7 @@ a finding.
     If the value of \"MaxKeepAliveRequests\" is set to a value less than
 \"100\" or does not exist, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -64,31 +62,29 @@ greater; add the directive if it does not exist.
 
   config_path = input('config_path')
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('KeepAlive') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).KeepAlive.nil?
+  unless apache_conf(config_path).KeepAlive.nil?
     apache_conf(config_path).KeepAlive.each do |value|
-      describe "KeepAlive value should be set to On" do
-        subject { value } 
+      describe 'KeepAlive value should be set to On' do
+        subject { value }
         it { should cmp 'On' }
       end
     end
   end
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('MaxKeepAliveRequests') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).MaxKeepAliveRequests.nil?
+  unless apache_conf(config_path).MaxKeepAliveRequests.nil?
     apache_conf(config_path).MaxKeepAliveRequests.each do |value|
-      describe "If the value of \"MaxKeepAliveRequests\" is set to a value less than \"100\" or does not exist, this is a finding." do
-        subject { value } 
+      describe 'If the value of "MaxKeepAliveRequests" is set to a value less than "100" or does not exist, this is a finding.' do
+        subject { value }
         it { should cmp < '100' }
       end
     end
   end
-  
 end
-

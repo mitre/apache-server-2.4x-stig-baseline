@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92705' do
   title 'The Apache web server must set an inactive timeout for sessions.'
   desc  "Leaving sessions open indefinitely is a major security risk. An
@@ -32,7 +30,7 @@ medium-value applications, and 20 minutes for low-value applications.
     If the \"reqtimeout_module\" is loaded and the \"RequestReadTimeout\"
 directive is not configured, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -56,23 +54,22 @@ directive is not configured, this is a finding.
 
   config_path = input('config_path')
 
-  reqtimeout_module = command("httpd -M | grep reqtimeout_module").stdout
+  reqtimeout_module = command('httpd -M | grep reqtimeout_module').stdout
 
-  describe reqtimeout_module do 
-    it { should include "reqtimeout_module" }
-  end 
+  describe reqtimeout_module do
+    it { should include 'reqtimeout_module' }
+  end
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('RequestReadTimeout') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).RequestReadTimeout.nil?
+  unless apache_conf(config_path).RequestReadTimeout.nil?
     apache_conf(config_path).RequestReadTimeout.each do |value|
-      describe "RequestReadTimeout value should be set" do
-        subject { value } 
+      describe 'RequestReadTimeout value should be set' do
+        subject { value }
         it { should_not be_nil }
       end
     end
   end
-  
 end

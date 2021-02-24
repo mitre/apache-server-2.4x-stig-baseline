@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92751' do
   title "The account used to run the Apache web server must not have a valid
 login shell and password defined."
@@ -41,7 +39,7 @@ configured for the account:
     If the account has a valid login shell and a password defined, this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Update the /etc/passwd file to assign the account used to run the \"httpd\"
 process an invalid login shell such as \"/sbin/nologin\".
 
@@ -61,8 +59,7 @@ process an invalid login shell such as \"/sbin/nologin\".
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  describe "The account used to run the Apache web server must not have a valid login shell and password defined." do 
-    skip "Determine the account that is running the httpd process. If this account has a valid login shell and a password defined, this is a finding."
+  describe 'The account used to run the Apache web server must not have a valid login shell and password defined.' do
+    skip 'Determine the account that is running the httpd process. If this account has a valid login shell and a password defined, this is a finding.'
   end
 end
-

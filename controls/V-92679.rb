@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92679' do
   title "Cookies exchanged between the Apache web server and client, such as
 session cookies, must have security settings that disallow cookie access
@@ -36,7 +34,7 @@ Modules from the above command.\"
     If the \"headers_module (shared)\" is not loaded, this is a finding.
 
   "
-  desc  'fix', "
+  desc 'fix', "
     Edit the \"mod_session.conf\" file and find the \"SessionCookieName\"
 directive.
 
@@ -59,24 +57,23 @@ directive.
   tag nist: ['SC-23 (3)']
 
   config_path = input('config_path')
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('SessionCookieName') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).SessionCookieName.nil?
+  unless apache_conf(config_path).SessionCookieName.nil?
     apache_conf(config_path).SessionCookieName.each do |value|
-      describe "SessionCookieName value should return httpOnly and Secure" do
-        subject { value } 
-        it { should include "httpOnly" }
-        it { should include "Secure" }
+      describe 'SessionCookieName value should return httpOnly and Secure' do
+        subject { value }
+        it { should include 'httpOnly' }
+        it { should include 'Secure' }
       end
     end
   end
 
-  headers_module = command("httpd -M | grep -i headers_module (shared)")
+  headers_module = command('httpd -M | grep -i headers_module (shared)')
 
-  describe headers_module.stdout.strip do 
-    it {should_not cmp "" }
+  describe headers_module.stdout.strip do
+    it { should_not cmp '' }
   end
-
 end

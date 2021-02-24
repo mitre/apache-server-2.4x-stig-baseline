@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92757' do
   title "The Apache web server htpasswd files (if present) must reflect proper
 ownership and permissions."
@@ -32,7 +30,7 @@ Netscape and Apache to provide for password access to designated websites.
 
     If another account has access to this file, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Ensure the SA or Web Manager account owns the \"htpasswd\" file.
 
     Ensure permissions are set to \"550\".
@@ -47,20 +45,19 @@ Netscape and Apache to provide for password access to designated websites.
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  htpasswd_command = command("find / -name htpasswd").stdout.strip
+  htpasswd_command = command('find / -name htpasswd').stdout.strip
 
   if !htpasswd_command.empty?
     htpasswd = file(htpasswd_command)
 
-    describe htpasswd do 
+    describe htpasswd do
       it { should_not be_more_permissive_than('0550') }
       its('owner') { should be_in input('server_admins') }
     end
 
-  else 
-    describe htpasswd_command do 
-     skip "Could not find htpwasswd. This check has to be manually reviewed."
+  else
+    describe htpasswd_command do
+      skip 'Could not find htpwasswd. This check has to be manually reviewed.'
     end
   end
-
 end

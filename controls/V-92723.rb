@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92723' do
   title "The Apache web server must generate log records that can be mapped to
 Coordinated Universal Time (UTC) or Greenwich Mean Time (GMT) which are stamped
@@ -45,7 +43,7 @@ stamp format for log data.
     If \"%t\" flag is not present, time is not mapped to UTC or GMT time, this
 is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     In a command line, run \"httpd -M\" to view a list of installed modules.
 
     If \"log_config_module\" is not listed, enable this module.
@@ -58,23 +56,22 @@ ensure the \"LogFormat\" line contains the %t flag.
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000374-WSR-000172'
-  tag satisfies: ['SRG-APP-000374-WSR-000172', 'SRG-APP-000375-WSR-000171']
+  tag satisfies: %w(SRG-APP-000374-WSR-000172 SRG-APP-000375-WSR-000171)
   tag gid: 'V-92723'
   tag rid: 'SV-102811r1_rule'
   tag stig_id: 'AS24-U1-000750'
   tag fix_id: 'F-98965r1_fix'
-  tag cci: ['CCI-001889', 'CCI-001890']
+  tag cci: %w(CCI-001889 CCI-001890)
   tag nist: ['AU-8 b', 'AU-8 b']
 
   config_path = input('config_path')
-  describe file(config_path) do 
-    its ('content') { should match '^[\\s]*LogFormat[\\s]+.*(?=.*\%t).*$' }
+  describe file(config_path) do
+    its('content') { should match '^[\\s]*LogFormat[\\s]+.*(?=.*\%t).*$' }
   end
 
-  log_config_module = command("httpd -M | grep log_config_module").stdout
+  log_config_module = command('httpd -M | grep log_config_module').stdout
 
-  describe log_config_module do 
-    it { should include "log_config_module" }
-  end 
-  
+  describe log_config_module do
+    it { should include 'log_config_module' }
+  end
 end

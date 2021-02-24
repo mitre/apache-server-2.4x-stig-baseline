@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92717' do
   title "The Apache web server must not impede the ability to write specified
 log record content to an audit log server."
@@ -16,7 +14,7 @@ be capable of writing logs to centralized audit log servers."
     If there is a setting within the SIEM that could impede the ability to
 write specific log record content, this is a finding.
   "
-  desc  'fix', "Work with the SIEM administrator to  allow the ability to write
+  desc 'fix', "Work with the SIEM administrator to  allow the ability to write
 specified log record content to an audit log server."
   impact 0.5
   tag severity: 'medium'
@@ -28,8 +26,7 @@ specified log record content to an audit log server."
   tag cci: ['CCI-001851']
   tag nist: ['AU-4 (1)']
 
-  describe "Work with SIEM administrator to determine audit configurations" do 
-    skip "If there is a setting within the SIEM that could impede the ability to write specific log record content, this is a finding."
+  describe 'Work with SIEM administrator to determine audit configurations' do
+    skip 'If there is a setting within the SIEM that could impede the ability to write specific log record content, this is a finding.'
   end
 end
-

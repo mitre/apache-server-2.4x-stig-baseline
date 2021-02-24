@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92661' do
   title "The Apache web server must be configured to use a specified IP address
 and port."
@@ -40,7 +38,7 @@ this is a finding.
 
     If the \"Listen\" directive does not exist, this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -55,29 +53,27 @@ this is a finding.
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000142-WSR-000089'
-  tag satisfies: ['SRG-APP-000142-WSR-000089', 'SRG-APP-000176-WSR-000096']
+  tag satisfies: %w(SRG-APP-000142-WSR-000089 SRG-APP-000176-WSR-000096)
   tag gid: 'V-92661'
   tag rid: 'SV-102749r1_rule'
   tag stig_id: 'AS24-U1-000360'
   tag fix_id: 'F-98903r1_fix'
-  tag cci: ['CCI-000186', 'CCI-000382']
+  tag cci: %w(CCI-000186 CCI-000382)
   tag nist: ['IA-5 (2) (b)', 'CM-7 b']
 
   config_path = input('config_path')
-  listen = apache_conf(config_path).params("Listen")
+  listen = apache_conf(config_path).params('Listen')
 
   if !listen.nil?
     listen.each do |address|
-      describe address do 
+      describe address do
         it { should match /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5]):[0-9]+$/ }
         it { should_not match /^0.0.0.0:[0-9]+$/ }
       end
     end
   else
-    describe apache_conf(config_path) do 
-      its('Listen') { should_not cmp nil } 
-    end 
+    describe apache_conf(config_path) do
+      its('Listen') { should_not cmp nil }
+    end
   end
-
 end
-

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92629' do
   title "The Apache web server log files must only be accessible by privileged
 users."
@@ -54,24 +52,22 @@ permissions to read the log files."
   tag cci: ['CCI-000162']
   tag nist: ['AU-9']
 
-  config_path = input('config_path')     
+  config_path = input('config_path')
   apache_conf_dir = apache_conf(config_path).conf_dir
   apache_logs_dir = File.join(apache_conf_dir[0], 'logs')
-  log_files = command("find #{apache_logs_dir}").stdout.split("\n") 
-  
+  log_files = command("find #{apache_logs_dir}").stdout.split("\n")
+
   if !log_files.empty?
     log_files.each do |log|
-      file_group = file(log).group
-      describe "Only system administrators and service accounts running the server should have permissions to the files." do 
-        subject {file(log)}
+      describe 'Only system administrators and service accounts running the server should have permissions to the files.' do
+        subject { file(log) }
         its('owner') { should be_in input('server_admins') }
         its('group') { should be_in input('server_admin_groups') }
       end
     end
   else
-    describe "Only system administrators and service accounts running the server should have permissions to the files." do 
-      skip "Logs files could not be found. This check has to be manually reviewed."
+    describe 'Only system administrators and service accounts running the server should have permissions to the files.' do
+      skip 'Logs files could not be found. This check has to be manually reviewed.'
     end
   end
-  
 end

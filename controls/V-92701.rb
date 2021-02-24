@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92701' do
   title "Debugging and trace information used to diagnose the Apache web server
 must be disabled."
@@ -42,7 +40,7 @@ because the default value is \"On\".
 
     # cat /<path_to_file>/httpd.conf | grep -i \"LogLevel\"
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -66,30 +64,29 @@ because the default value is \"On\".
 
   config_path = input('config_path')
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('TraceEnable') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).TraceEnable.nil?
+  unless apache_conf(config_path).TraceEnable.nil?
     apache_conf(config_path).TraceEnable.each do |value|
-      describe "TraceEnable value should be off" do
-        subject { value } 
+      describe 'TraceEnable value should be off' do
+        subject { value }
         it { should cmp 'off' }
       end
     end
   end
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('LogLevel') { should_not be_nil }
   end
 
-  if !apache_conf(config_path).LogLevel.nil?
+  unless apache_conf(config_path).LogLevel.nil?
     apache_conf(config_path).LogLevel.each do |value|
-      describe "LogLevel value should be set" do
-        subject { value } 
+      describe 'LogLevel value should be set' do
+        subject { value }
         it { should_not be_nil }
       end
     end
   end
-
 end

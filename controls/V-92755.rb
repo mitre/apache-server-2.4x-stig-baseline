@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92755' do
   title 'The Apache web server software must be a vendor-supported version.'
   desc  "Many vulnerabilities are associated with older versions of web server
@@ -26,7 +24,7 @@ cases may not match the version number noted above. If the site can provide
 vendor documentation showing the version of the web server is supported, this
 would not be a finding.
   "
-  desc  'fix', "Install the current version of the web server software and
+  desc 'fix', "Install the current version of the web server software and
 maintain appropriate service packs and patches."
   impact 0.7
   tag severity: 'high'
@@ -38,12 +36,10 @@ maintain appropriate service packs and patches."
   tag cci: ['CCI-000366']
   tag nist: ['CM-6 b']
 
-  httpd_version = command("httpd -v").stdout.scan(/Server version: Apache\/(\S+)\s\(\w+\)/).flatten
-  required_version = input('apache_version')
+  httpd_version = command('httpd -v').stdout.scan(%r{Server version: Apache/(\S+)\s\(\w+\)}).flatten
 
-  describe "Apache Web Server installed must be updated" do 
+  describe 'Apache Web Server installed must be updated' do
     subject { httpd_version }
     it { should cmp >= input('apache_version') }
   end
-  
 end

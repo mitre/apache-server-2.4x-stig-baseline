@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92715' do
   title "The Apache web server must use a logging mechanism that is configured
 to allocate log record storage capacity large enough to accommodate the logging
@@ -22,7 +20,7 @@ storage dependent on the impact of the web server.
     If there is no setting within a SIEM to accommodate enough a large logging
 capacity, this is a finding.
   "
-  desc  'fix', "Work with the SIEM administrator to determine if the SIEM is
+  desc 'fix', "Work with the SIEM administrator to determine if the SIEM is
 configured to allocate log record storage capacity large enough to accommodate
 the logging requirements of the Apache web server."
   impact 0.5
@@ -35,8 +33,7 @@ the logging requirements of the Apache web server."
   tag cci: ['CCI-001849']
   tag nist: ['AU-4']
 
-  describe "Work with SIEM administrator to determine log storage capacity." do 
-    skip "If there is no setting within a SIEM to accommodate enough a large logging capacity, this is a finding." 
+  describe 'Work with SIEM administrator to determine log storage capacity.' do
+    skip 'If there is no setting within a SIEM to accommodate enough a large logging capacity, this is a finding.'
   end
 end
-

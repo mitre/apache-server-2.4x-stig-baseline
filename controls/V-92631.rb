@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92631' do
   title "The log information from the Apache web server must be protected from
 unauthorized modification or deletion."
@@ -35,7 +33,7 @@ permissions. Run the following command:
     If the web server log files present are owned by anyone other than an
 administrative service account this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"ErrorLog\" directory in the \"httpd.conf\"
 file:
 
@@ -56,37 +54,34 @@ service account:
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000119-WSR-000069'
-  tag satisfies: ['SRG-APP-000119-WSR-000069', 'SRG-APP-000120-WSR-000070']
+  tag satisfies: %w(SRG-APP-000119-WSR-000069 SRG-APP-000120-WSR-000070)
   tag gid: 'V-92631'
   tag rid: 'SV-102719r1_rule'
   tag stig_id: 'AS24-U1-000190'
   tag fix_id: 'F-98873r1_fix'
-  tag cci: ['CCI-000163', 'CCI-000164']
-  tag nist: ['AU-9', 'AU-9']
+  tag cci: %w(CCI-000163 CCI-000164)
+  tag nist: %w(AU-9 AU-9)
 
-  config_path = input('config_path')     
+  config_path = input('config_path')
   apache_conf_dir = apache_conf(config_path).conf_dir
   apache_logs_dir = File.join(apache_conf_dir[0], 'logs')
-  log_files = command("find #{apache_logs_dir}").stdout.split("\n") 
+  log_files = command("find #{apache_logs_dir}").stdout.split("\n")
 
-  if !log_files.empty? 
+  if !log_files.empty?
     log_files.each do |log|
-      file_group = file(log).group
-      describe "Only system administrators and service accounts running the server should have permissions to the files." do 
-        subject {file(log)}
+      describe 'Only system administrators and service accounts running the server should have permissions to the files.' do
+        subject { file(log) }
         its('owner') { should be_in input('server_admins') }
         its('group') { should be_in input('server_admin_groups') }
       end
     end
   else
-    describe "Only system administrators and service accounts running the server should have permissions to the files." do 
-      skip "Logs files could not be found. This check has to be manually reviewed."
+    describe 'Only system administrators and service accounts running the server should have permissions to the files.' do
+      skip 'Logs files could not be found. This check has to be manually reviewed.'
     end
   end
 
-  describe apache_conf(config_path) do 
+  describe apache_conf(config_path) do
     its('ErrorLog') { should_not be_nil }
   end
-  
 end
-

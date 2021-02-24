@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92711' do
   title "The Apache web server must be configured to immediately disconnect or
 disable remote access to the hosted applications."
@@ -47,7 +45,7 @@ following steps:
 or disable remote access to the hosted applications when necessary, this is a
 finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Prepare documented procedures for shutting down an Apache website in the
 event of an attack.
 
@@ -67,11 +65,10 @@ event of an attack.
   tag cci: ['CCI-002322']
   tag nist: ['AC-17 (9)']
 
-  describe "Review procedures for shutting down Server in the event of an attack" do 
+  describe 'Review procedures for shutting down Server in the event of an attack' do
     skip "If the web server is not capable of or cannot be configured to disconnect or disable remote access to the hosted applications when necessary, this is a finding
     Interview the SA and Web Manager.
     Ask for documentation for the Apache web server administration.
     Verify there are documented procedures for shutting down an Apache website in the event of an attack."
   end
 end
-

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92695' do
   title "The Apache web server must be built to fail to a known safe state if
 system initialization fails, shutdown fails, or aborts fail."
@@ -26,7 +24,7 @@ for the Apache 2.4 web server in the event of the necessity for rollback.
     If documentation for a disaster recovery has not been established, this is
 a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Prepare documentation for disaster recovery methods for the Apache 2.4 web
 server in the event of the necessity for rollback.
 
@@ -35,7 +33,7 @@ server in the event of the necessity for rollback.
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000225-WSR-000140'
-  tag satisfies: ['SRG-APP-000225-WSR-000140', 'SRG-APP-000225-WSR-000074']
+  tag satisfies: %w(SRG-APP-000225-WSR-000140 SRG-APP-000225-WSR-000074)
   tag gid: 'V-92695'
   tag rid: 'SV-102783r1_rule'
   tag stig_id: 'AS24-U1-000550'
@@ -43,9 +41,8 @@ server in the event of the necessity for rollback.
   tag cci: ['CCI-001190']
   tag nist: ['SC-24']
 
-  describe "Review documentation for a disaster recovery procedures" do 
-    skip "Interview the System Administrator for the Apache 2.4 web server. Ask for documentation 
+  describe 'Review documentation for a disaster recovery procedures' do
+    skip "Interview the System Administrator for the Apache 2.4 web server. Ask for documentation
       on the disaster recovery methods tested and planned for the Apache 2.4 web server in the event of the necessity for rollback."
   end
-  
 end

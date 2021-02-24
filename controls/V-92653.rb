@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92653' do
   title "The Apache web server must have resource mappings set to disable the
 serving of certain file types."
@@ -36,7 +34,7 @@ to a user, and all other types must be disabled.
     If this is not documented and approved by the Information System Security
 Officer (ISSO), this is a finding.
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine the location of the \"HTTPD_ROOT\" directory and the
 \"httpd.conf\" file:
 
@@ -56,7 +54,7 @@ they configure .exe, .dll, .com, .bat, or .csh, remove those references.
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000141-WSR-000081'
-  tag satisfies: ['SRG-APP-000141-WSR-000081', 'SRG-APP-000141-WSR-000083']
+  tag satisfies: %w(SRG-APP-000141-WSR-000081 SRG-APP-000141-WSR-000083)
   tag gid: 'V-92653'
   tag rid: 'SV-102741r1_rule'
   tag stig_id: 'AS24-U1-000300'
@@ -65,28 +63,20 @@ they configure .exe, .dll, .com, .bat, or .csh, remove those references.
   tag nist: ['CM-7 a']
 
   config_path = input('config_path')
-  file_endings = [".exe", ".dll", ".com", ".bat", ".csh"]
-  
+
   describe apache_conf(config_path) do
-    its('AddHandler.to_s') { should_not match '.exe'}
-    its('AddHandler.to_s') { should_not match '.dll'}
-    its('AddHandler.to_s') { should_not match '.com'}
-    its('AddHandler.to_s') { should_not match '.bat'}
-    its('AddHandler.to_s') { should_not match '.csh'}
-  end
-  
-  describe apache_conf(config_path) do
-    its('Action.to_s') { should_not match '.exe'}
-    its('Action.to_s') { should_not match '.dll'}
-    its('Action.to_s') { should_not match '.com'}
-    its('Action.to_s') { should_not match '.bat'}
-    its('Action.to_s') { should_not match '.csh'}
+    its('AddHandler.to_s') { should_not match '.exe' }
+    its('AddHandler.to_s') { should_not match '.dll' }
+    its('AddHandler.to_s') { should_not match '.com' }
+    its('AddHandler.to_s') { should_not match '.bat' }
+    its('AddHandler.to_s') { should_not match '.csh' }
   end
 
+  describe apache_conf(config_path) do
+    its('Action.to_s') { should_not match '.exe' }
+    its('Action.to_s') { should_not match '.dll' }
+    its('Action.to_s') { should_not match '.com' }
+    its('Action.to_s') { should_not match '.bat' }
+    its('Action.to_s') { should_not match '.csh' }
+  end
 end
-
-
-
-
-
-

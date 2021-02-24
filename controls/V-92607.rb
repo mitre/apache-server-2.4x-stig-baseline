@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92607' do
   title 'The Apache web server must have system logging enabled.'
   desc  "The server error logs are invaluable because they can also be used to
@@ -43,8 +41,6 @@ for the CustomLog."
 
   config_path = input('config_path')
   describe apache_conf(config_path) do
-    its ('CustomLog') { should_not be_empty }
+    its('CustomLog') { should_not be_empty }
   end
-
 end
-

@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92675' do
   title "The Apache web server must separate the hosted applications from
 hosted Apache web server management functionality."
@@ -20,7 +18,7 @@ management functions.
 
     If the functions are not separated, this is a finding.
   "
-  desc  'fix', "Configure Apache to separate the hosted applications from web
+  desc 'fix', "Configure Apache to separate the hosted applications from web
 server management functionality."
   impact 0.5
   tag severity: 'medium'
@@ -32,10 +30,8 @@ server management functionality."
   tag cci: ['CCI-001082']
   tag nist: ['SC-2']
 
-  describe "The Apache web server must separate the hosted applications from hosted Apache web server management functionality." do 
+  describe 'The Apache web server must separate the hosted applications from hosted Apache web server management functionality.' do
     skip "Review the web server documentation and deployed configuration to determine whether hosted application functionality is separated from web server management functions.
     If the functions are not separated, this is a finding."
   end
-  
 end
-

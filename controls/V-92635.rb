@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92635' do
   title "The log data and records from the Apache web server must be backed up
 onto a different system or media."
@@ -26,7 +24,7 @@ software and all web server data files.
     If there is not a backup and recovery process for the web server, this is a
 finding.
   "
-  desc  'fix', 'Document the web server backup procedures.'
+  desc 'fix', 'Document the web server backup procedures.'
   impact 0.5
   tag severity: 'medium'
   tag gtitle: 'SRG-APP-000125-WSR-000071'
@@ -37,10 +35,9 @@ finding.
   tag cci: ['CCI-001348']
   tag nist: ['AU-9 (2)']
 
-  describe 'Review backup and recovery process for the web server' do 
-    skip 'Interview the Information System Security Officer, System Administrator, Web Manager, Webmaster, or 
-    developers as necessary to determine whether a tested and verifiable backup strategy has been implemented 
+  describe 'Review backup and recovery process for the web server' do
+    skip 'Interview the Information System Security Officer, System Administrator, Web Manager, Webmaster, or
+    developers as necessary to determine whether a tested and verifiable backup strategy has been implemented
     for web server software and all web server data files.'
   end
 end
-

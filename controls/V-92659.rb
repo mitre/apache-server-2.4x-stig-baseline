@@ -1,5 +1,3 @@
-# encoding: UTF-8
-
 control 'V-92659' do
   title "The Apache web server must have Web Distributed Authoring (WebDAV)
 disabled."
@@ -23,7 +21,7 @@ modules.
     dav_fs_module
     dav_lock_module
   "
-  desc  'fix', "
+  desc 'fix', "
     Determine where the \"dav\" modules are located by running the following
 command:
 
@@ -47,25 +45,23 @@ command:
   tag cci: ['CCI-000381']
   tag nist: ['CM-7 a']
 
-  modules_command = "httpd -M | sort"
-  installed_modules = command(modules_command).stdout.split 
-  
-  check_modules = [
-    "dav_module",
-    "dav_fs_module",
-    "dav_lock_module",
-  ]
+  modules_command = 'httpd -M | sort'
+  installed_modules = command(modules_command).stdout.split
+
+  check_modules = %w(
+    dav_module
+    dav_fs_module
+    dav_lock_module
+  )
 
   bad_modules = installed_modules.select do |i|
-    check_modules.any? {|j| i.include?(j) }
+    check_modules.any? { |j| i.include?(j) }
   end
 
-  describe bad_modules do 
-    it "The following modules should be removed from Apache server" do 
+  describe bad_modules do
+    it 'The following modules should be removed from Apache server' do
       failure_message = "The following modules should be removed: #{bad_modules.join(', ')}"
       expect(bad_modules).to be_empty, failure_message
     end
   end
-
 end
-
