@@ -1,6 +1,6 @@
 include:
 - project: stig/inspec-scanning-integration
-  ref: 1.1.11
+  ref: 1.2.0
   file: templates/templates.yml
 
 before_script:
@@ -21,7 +21,8 @@ lint Apache_2.4_Server:
 exec Apache_2.4_Server:
   extends: .ci:stage:exec:inspec
   variables:
-    TARGET: 'rep.dsolab.io/baselines/apache2.4_baseline:1.1'
+           TARGET: 'rep.dsolab.io/baselines/apache2.4_baseline:1.1'
+           #reqINPUTS: 'inputs.yml'
 
 publish Apache_2.4_Server:
   extends: .ci:stage:publish:inspec:artifacts
@@ -29,9 +30,3 @@ publish Apache_2.4_Server:
   - check Apache_2.4_Server
   - lint Apache_2.4_Server
   - exec Apache_2.4_Server
-
-sync:
-  extends: .ci:stage:publish:inspec:sync
-  variables:
-    SYNC_REPO: "repo1.dso.mil/disa/inspec/apache/httpd_2.4x_server.git"
-    SYNC_TOKEN: $IR1_APACHE_SERVER24X
